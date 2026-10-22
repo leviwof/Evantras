@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { headers } from "next/headers";
-import { connectToDatabase } from "@/lib/mongodb";
+import { connectToDatabase, getLastMongoError } from "@/lib/mongodb";
 import { Job } from "@/models/Job";
 import { 
   jobRoles as initialJobs,
@@ -59,6 +59,7 @@ export async function GET(request: Request) {
       {
         success: true,
         source: "fallback",
+        dbError: getLastMongoError(),
         jobs: activeJobs,
       },
       {
@@ -74,6 +75,7 @@ export async function GET(request: Request) {
       {
         success: true,
         source: "fallback",
+        dbError: getLastMongoError(),
         jobs: activeJobs,
       },
       {

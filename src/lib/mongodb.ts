@@ -1,7 +1,5 @@
 import mongoose from "mongoose";
 
-const MONGODB_URI = process.env.MONGODB_URI;
-
 interface MongooseCache {
   conn: typeof mongoose | null;
   promise: Promise<typeof mongoose | null> | null;
@@ -9,6 +7,7 @@ interface MongooseCache {
 
 declare global {
   var mongooseCache: MongooseCache | undefined;
+  var lastMongoError: string | null | undefined;
 }
 
 let cached: MongooseCache = global.mongooseCache || { conn: null, promise: null };
@@ -16,13 +15,18 @@ if (!global.mongooseCache) {
   global.mongooseCache = cached;
 }
 
+export function getLastMongoError(): string | null {
+  return global.lastMongoError || null;
+}
+
 export async function connectToDatabase(): Promise<typeof mongoose | null> {
-  if (!MONGODB_URI) {
-    // If not yet configured in .env.local, return null gracefully
+  const uri = process.env.MONGODB_URI?.trim();
+  if (!uri) {
+    global.lastMongoError = "MONGODB_URI environment variable is missing or empty.";
     return null;
   }
 
-  if (cached.conn) {
+  if (cached.conn && mongoose.connection.readyState === 1) {
     return cached.conn;
   }
 
@@ -32,11 +36,14 @@ export async function connectToDatabase(): Promise<typeof mongoose | null> {
       serverSelectionTimeoutMS: 5000,
     };
 
-    cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongooseInstance) => {
+    cached.promise = mongoose.connect(uri, opts).then((mongooseInstance) => {
       console.log("Connected to MongoDB successfully.");
+      global.lastMongoError = null;
       return mongooseInstance;
     }).catch((err) => {
-      console.error("MongoDB connection failed:", err.message);
+      const errMsg = err?.message || String(err);
+      console.error("MongoDB connection failed:", errMsg);
+      global.lastMongoError = errMsg;
       cached.promise = null;
       return null;
     });
@@ -44,7 +51,8 @@ export async function connectToDatabase(): Promise<typeof mongoose | null> {
 
   try {
     cached.conn = await cached.promise;
-  } catch (e) {
+  } catch (e: any) {
+    global.lastMongoError = e?.message || String(e);
     cached.promise = null;
     return null;
   }
