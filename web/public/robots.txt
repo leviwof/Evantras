@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /portal-admin/
+Disallow: /api/admin/
+
+Sitemap: https://evantras.com/sitemap.xml

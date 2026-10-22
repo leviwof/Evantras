@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 190" width="100%" height="100%">
+  <defs>
+    <radialGradient id="parchment" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FCFAF2"/>
+      <stop offset="65%" stop-color="#F8F3E4"/>
+      <stop offset="100%" stop-color="#EFE7D0"/>
+    </radialGradient>
+    <linearGradient id="goldEdge" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D4B673"/>
+      <stop offset="50%" stop-color="#9A7836"/>
+      <stop offset="100%" stop-color="#D4B673"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Outer Dark Oval Frame -->
+  <ellipse cx="160" cy="95" rx="152" ry="87" fill="#1C1E18" stroke="url(#goldEdge)" stroke-width="4.5"/>
+  
+  <!-- Concentric Gold Accent Ring -->
+  <ellipse cx="160" cy="95" rx="142" ry="77" fill="none" stroke="#C5A869" stroke-width="2"/>
+  
+  <!-- Inner Dark Thin Separator Ring -->
+  <ellipse cx="160" cy="95" rx="138" ry="73" fill="none" stroke="#2B2D26" stroke-width="1.5"/>
+
+  <!-- Inner Cream Parchment Center Field -->
+  <ellipse cx="160" cy="95" rx="135" ry="70" fill="url(#parchment)"/>
+
+  <!-- Brand Typography -->
+  <text x="160" y="92" text-anchor="middle" font-family="'Times New Roman', Georgia, 'Cinzel', serif" font-size="34" font-weight="bold" fill="#11130E" letter-spacing="2.2">EVANTRAS</text>
+  <text x="160" y="118" text-anchor="middle" font-family="'Times New Roman', Georgia, 'Cinzel', serif" font-size="12.5" font-weight="600" fill="#22241F" letter-spacing="3.2">CONSULTING SERVICES</text>
+</svg>

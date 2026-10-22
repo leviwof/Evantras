@@ -1,0 +1,42 @@
+# Dependencies
+node_modules/
+web/node_modules/
+
+# Next.js build output
+.next/
+web/.next/
+out/
+web/out/
+build/
+web/build/
+
+# Environment & Sensitive files
+.env
+.env*
+*.env
+*.local
+*.pem
+*.key
+*.cert
+
+# Debug & Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# OS & Editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+web/next-env.d.ts
