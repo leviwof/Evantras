@@ -401,43 +401,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Recruitment Spotlight (For Naukri / Indeed candidates) */}
-      <section className="py-16 sm:py-20 bg-slate-50 border-t border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 rounded-3xl p-8 sm:p-12 text-white relative overflow-hidden shadow-2xl">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-              <div className="lg:col-span-8 space-y-4">
-                <span className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-semibold">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                  <span>Active Recruitment • Anna Nagar Chennai Office</span>
-                </span>
-                <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
-                  Applied via Naukri, Indeed, or LinkedIn?
-                </h2>
-                <p className="text-sm sm:text-base text-slate-200 max-w-2xl leading-relaxed">
-                  We are actively welcoming candidates for IT Support, Business Development, HR, and Strategy Consulting roles at our Chennai facility. Submit your application directly for prompt screening.
-                </p>
-              </div>
-
-              <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3 justify-center">
-                <Link
-                  href="/careers"
-                  className="px-6 py-3.5 rounded-full bg-white text-blue-950 hover:bg-slate-100 font-bold text-sm text-center transition-colors shadow-lg"
-                >
-                  View Open Roles & Apply
-                </Link>
-                <Link
-                  href="/careers#apply-form"
-                  className="px-6 py-3.5 rounded-full bg-blue-700/80 hover:bg-blue-600 border border-blue-400/30 text-white font-semibold text-sm text-center transition-colors"
-                >
-                  Upload Resume Directly
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Office & Contact Callout */}
       <section className="py-16 bg-white border-t border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
