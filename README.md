@@ -26,13 +26,11 @@ A modern, high-performance web platform built for **Evantras Consulting Services
 
 ### 1. Run in Development Mode:
 ```powershell
-cd web
 npm run dev
 ```
 
 ### 2. Build and Run in Production:
 ```powershell
-cd web
 npm run build
 npm run start -- -p 3001
 ```
@@ -47,31 +45,30 @@ The application is accessible at:
 
 ```
 eVantras/
-├── content_source/             # Original Docx documents preserved
-│   ├── About US.docx
-│   ├── Contact Us.docx
-│   ├── Privacy Policy.docx
-│   └── Terms of Service.docx
-│
-└── web/                        # Next.js 16 Web Application
-    ├── src/
-    │   ├── app/
-    │   │   ├── page.tsx               # Home Page
-    │   │   ├── about/page.tsx         # About Us Page (from docx)
-    │   │   ├── services/page.tsx      # Consulting Services Practice Areas
-    │   │   ├── careers/page.tsx       # Careers & Application Portal
-    │   │   ├── contact/page.tsx       # Contact Us + Google Map Embed (from docx)
-    │   │   ├── privacy-policy/page.tsx # Privacy Policy (from docx)
-    │   │   ├── terms-of-service/page.tsx # Terms of Service (from docx)
-    │   │   └── api/
-    │   │       ├── apply/route.ts     # Candidate Application Handler
-    │   │       └── contact/route.ts   # Contact Inquiry Handler
-    │   ├── components/
-    │   │   ├── Navbar.tsx             # Responsive Header with Hiring Badge
-    │   │   └── Footer.tsx             # Corporate Footer with Office Info & Links
-    │   └── globals.css
-    ├── package.json
-    └── tsconfig.json
+├── src/
+│   ├── app/
+│   │   ├── page.tsx               # Home Page
+│   │   ├── about/page.tsx         # About Us Page
+│   │   ├── services/page.tsx      # Consulting Services Practice Areas
+│   │   ├── careers/page.tsx       # Careers & Application Portal
+│   │   ├── contact/page.tsx       # Contact Us + Google Map Embed
+│   │   ├── portal-admin/page.tsx  # Secret Admin Portal for Job Management
+│   │   ├── privacy-policy/page.tsx # Privacy Policy
+│   │   ├── terms-of-service/page.tsx # Terms of Service
+│   │   └── api/
+│   │       ├── admin/             # Admin Auth, Jobs & Applications APIs
+│   │       ├── apply/route.ts     # Candidate Application Handler
+│   │       └── contact/route.ts   # Contact Inquiry Handler
+│   ├── components/
+│   │   ├── Navbar.tsx             # Corporate Header with Official Emblem Logo
+│   │   └── Footer.tsx             # Corporate Footer with Office Info & Links
+│   └── globals.css
+├── public/
+│   ├── logo.svg                   # Vector Brand Emblem
+│   ├── logo.png                   # Brand Logo Asset
+│   └── robots.txt                 # SEO & Crawler Rules
+├── package.json
+└── tsconfig.json
 ```
 
 ---
