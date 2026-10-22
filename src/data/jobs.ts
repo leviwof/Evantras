@@ -101,3 +101,47 @@ export const jobRoles: JobRole[] = [
     ],
   },
 ];
+
+export interface StoredJobItem extends JobRole {
+  isActive: boolean;
+  createdAt?: string;
+}
+
+declare global {
+  var globalJobsStore: StoredJobItem[] | undefined;
+}
+
+export function getGlobalJobsStore(): StoredJobItem[] {
+  if (!global.globalJobsStore || global.globalJobsStore.length === 0) {
+    global.globalJobsStore = jobRoles.map((j) => ({
+      ...j,
+      isActive: true,
+      createdAt: new Date().toISOString(),
+    }));
+  }
+  return global.globalJobsStore;
+}
+
+export function addGlobalJob(job: StoredJobItem): StoredJobItem {
+  const store = getGlobalJobsStore();
+  store.unshift(job);
+  return job;
+}
+
+export function updateGlobalJob(id: string, updates: Partial<StoredJobItem>): StoredJobItem | null {
+  const store = getGlobalJobsStore();
+  const index = store.findIndex((j) => j.id === id);
+  if (index !== -1) {
+    store[index] = { ...store[index], ...updates };
+    return store[index];
+  }
+  return null;
+}
+
+export function deleteGlobalJob(id: string): boolean {
+  const store = getGlobalJobsStore();
+  const initialLen = store.length;
+  global.globalJobsStore = store.filter((j) => j.id !== id);
+  return global.globalJobsStore.length < initialLen;
+}
+

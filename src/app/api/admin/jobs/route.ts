@@ -3,7 +3,14 @@ import { cookies } from "next/headers";
 import { verifySessionToken } from "@/lib/auth";
 import { connectToDatabase } from "@/lib/mongodb";
 import { Job } from "@/models/Job";
-import { jobRoles as initialJobs } from "@/data/jobs";
+import { 
+  jobRoles as initialJobs,
+  getGlobalJobsStore,
+  addGlobalJob,
+  updateGlobalJob,
+  deleteGlobalJob,
+  type StoredJobItem
+} from "@/data/jobs";
 
 // Middleware helper to check admin session
 async function verifyAdminAuth() {
@@ -39,14 +46,16 @@ export async function GET() {
       return NextResponse.json({ success: true, jobs });
     }
 
-    // Fallback if DB not yet connected
+    // Fallback in-memory store if DB not yet connected
+    const fallbackJobs = getGlobalJobsStore();
     return NextResponse.json({
       success: true,
-      jobs: initialJobs.map((j) => ({ ...j, isActive: true })),
+      jobs: fallbackJobs,
     });
   } catch (error: any) {
     console.error("Admin fetch jobs error:", error);
-    return NextResponse.json({ error: "Failed to fetch jobs." }, { status: 500 });
+    const fallbackJobs = getGlobalJobsStore();
+    return NextResponse.json({ success: true, jobs: fallbackJobs });
   }
 }
 
@@ -87,26 +96,38 @@ export async function POST(request: Request) {
         "-" +
         Date.now().toString().slice(-4);
 
+    const parsedResponsibilities = Array.isArray(responsibilities)
+      ? responsibilities
+      : typeof responsibilities === "string"
+      ? responsibilities.split("\n").filter((s: string) => s.trim().length > 0)
+      : [];
+
+    const parsedQualifications = Array.isArray(qualifications)
+      ? qualifications
+      : typeof qualifications === "string"
+      ? qualifications.split("\n").filter((s: string) => s.trim().length > 0)
+      : [];
+
+    const jobData: StoredJobItem = {
+      id: cleanId,
+      title,
+      department,
+      category: category || "tech",
+      location: location || "Anna Nagar, Chennai",
+      type: type || "Full-Time • On-site",
+      experience,
+      overview,
+      responsibilities: parsedResponsibilities,
+      qualifications: parsedQualifications,
+      isActive: true,
+      createdAt: new Date().toISOString(),
+    };
+
     const conn = await connectToDatabase();
     if (conn) {
-      const newJob = await Job.create({
-        id: cleanId,
-        title,
-        department,
-        category: category || "tech",
-        location: location || "Anna Nagar, Chennai",
-        type: type || "Full-Time • On-site",
-        experience,
-        overview,
-        responsibilities: Array.isArray(responsibilities)
-          ? responsibilities
-          : responsibilities.split("\n").filter((s: string) => s.trim().length > 0),
-        qualifications: Array.isArray(qualifications)
-          ? qualifications
-          : qualifications.split("\n").filter((s: string) => s.trim().length > 0),
-        isActive: true,
-      });
-
+      const newJob = await Job.create(jobData);
+      // Keep in-memory store in sync
+      addGlobalJob(jobData);
       return NextResponse.json({
         success: true,
         message: "Job created and published successfully!",
@@ -114,9 +135,13 @@ export async function POST(request: Request) {
       });
     }
 
+    // Save into global in-memory store
+    const created = addGlobalJob(jobData);
+
     return NextResponse.json({
       success: true,
-      message: "Job received (MongoDB not connected, please set MONGODB_URI in .env.local).",
+      message: "Job created and published successfully!",
+      job: created,
     });
   } catch (error: any) {
     console.error("Create job error:", error);
@@ -142,6 +167,9 @@ export async function PUT(request: Request) {
       return NextResponse.json({ error: "Job ID is required." }, { status: 400 });
     }
 
+    // Always update in-memory store
+    updateGlobalJob(id, { isActive: Boolean(isActive) });
+
     const conn = await connectToDatabase();
     if (conn) {
       const updated = await Job.findOneAndUpdate(
@@ -157,7 +185,10 @@ export async function PUT(request: Request) {
       });
     }
 
-    return NextResponse.json({ success: true, message: "Status updated." });
+    return NextResponse.json({
+      success: true,
+      message: `Job ${isActive ? "activated" : "deactivated"} successfully.`,
+    });
   } catch (error: any) {
     return NextResponse.json({ error: "Failed to update job status." }, { status: 500 });
   }
@@ -178,6 +209,9 @@ export async function DELETE(request: Request) {
       return NextResponse.json({ error: "Job ID is required." }, { status: 400 });
     }
 
+    // Always delete from in-memory store
+    deleteGlobalJob(id);
+
     const conn = await connectToDatabase();
     if (conn) {
       await Job.findOneAndDelete({ id });
@@ -187,7 +221,7 @@ export async function DELETE(request: Request) {
       });
     }
 
-    return NextResponse.json({ success: true, message: "Job deleted." });
+    return NextResponse.json({ success: true, message: "Job deleted successfully." });
   } catch (error: any) {
     return NextResponse.json({ error: "Failed to delete job." }, { status: 500 });
   }

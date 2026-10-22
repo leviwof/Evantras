@@ -1,7 +1,10 @@
 import { NextResponse } from "next/server";
 import { connectToDatabase } from "@/lib/mongodb";
 import { Job } from "@/models/Job";
-import { jobRoles as initialJobs } from "@/data/jobs";
+import { 
+  jobRoles as initialJobs,
+  getGlobalJobsStore
+} from "@/data/jobs";
 
 export async function GET() {
   try {
@@ -29,18 +32,20 @@ export async function GET() {
       });
     }
 
-    // Fallback to static data if DB is offline
+    // Fallback to in-memory active jobs
+    const activeJobs = getGlobalJobsStore().filter((j) => j.isActive !== false);
     return NextResponse.json({
       success: true,
       source: "fallback",
-      jobs: initialJobs.map((j) => ({ ...j, isActive: true })),
+      jobs: activeJobs,
     });
   } catch (error: any) {
     console.error("Fetch jobs error:", error);
+    const activeJobs = getGlobalJobsStore().filter((j) => j.isActive !== false);
     return NextResponse.json({
       success: true,
       source: "fallback",
-      jobs: initialJobs.map((j) => ({ ...j, isActive: true })),
+      jobs: activeJobs,
     });
   }
 }

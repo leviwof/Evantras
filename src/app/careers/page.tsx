@@ -34,10 +34,10 @@ export default function CareersPage() {
   );
 
   useEffect(() => {
-    fetch("/api/jobs")
+    fetch("/api/jobs", { cache: "no-store" })
       .then((res) => res.json())
       .then((data) => {
-        if (data && data.jobs && data.jobs.length > 0) {
+        if (data && data.jobs && Array.isArray(data.jobs) && data.jobs.length > 0) {
           setLiveJobs(data.jobs);
         }
       })

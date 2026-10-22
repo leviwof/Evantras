@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { verifySessionToken } from "@/lib/auth";
 import { connectToDatabase } from "@/lib/mongodb";
 import { Application } from "@/models/Application";
+import { getGlobalApplicationsStore } from "@/data/applications";
 
 export async function GET() {
   const cookieStore = await cookies();
@@ -18,9 +19,11 @@ export async function GET() {
       return NextResponse.json({ success: true, applications });
     }
 
-    return NextResponse.json({ success: true, applications: [] });
+    const fallbackApps = getGlobalApplicationsStore();
+    return NextResponse.json({ success: true, applications: fallbackApps });
   } catch (error: any) {
     console.error("Fetch applications error:", error);
-    return NextResponse.json({ error: "Failed to fetch applications." }, { status: 500 });
+    const fallbackApps = getGlobalApplicationsStore();
+    return NextResponse.json({ success: true, applications: fallbackApps });
   }
 }

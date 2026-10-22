@@ -232,6 +232,9 @@ export default function PortalAdminPage() {
       }
 
       setShowAddJobModal(false);
+      if (json.job) {
+        setJobs((prev) => [json.job, ...prev.filter((j) => j.id !== json.job.id)]);
+      }
       setNewJob({
         title: "",
         department: "Technology & Advisory",

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { connectToDatabase } from "@/lib/mongodb";
 import { Application } from "@/models/Application";
+import { addGlobalApplication } from "@/data/applications";
 
 export async function POST(request: Request) {
   try {
@@ -49,6 +50,20 @@ export async function POST(request: Request) {
         status: "New",
       });
     }
+
+    // Always keep in in-memory store for immediate Admin dashboard display
+    addGlobalApplication({
+      fullName,
+      email,
+      phone,
+      position,
+      experience,
+      location,
+      noticePeriod,
+      message,
+      resumeName,
+      resumeData: resumeBase64,
+    });
 
     console.log("Candidate Application Logged:", {
       fullName,
