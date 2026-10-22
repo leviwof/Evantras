@@ -43,15 +43,6 @@ export default function HomePage() {
       secondaryBtn: "Contact Our Office",
       secondaryLink: "/contact",
     },
-    {
-      image: "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1920&q=80",
-      title: "We Are Actively Hiring at Anna Nagar, Chennai",
-      subtitle: "Applied via Naukri, Indeed, or LinkedIn? Submit your resume directly to our recruitment team for priority consideration.",
-      primaryBtn: "Explore Open Careers",
-      primaryLink: "/careers",
-      secondaryBtn: "Direct Resume Upload",
-      secondaryLink: "/careers#apply-form",
-    },
   ];
 
   useEffect(() => {
