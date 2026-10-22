@@ -7,7 +7,6 @@ import {
   Mail, 
   Clock, 
   ExternalLink, 
-  ShieldCheck, 
   FileText, 
   ChevronRight
 } from "lucide-react";
@@ -32,12 +31,6 @@ export default function Footer() {
             <p className="text-xs text-slate-400 leading-relaxed">
               An IT and business strategy consulting company headquartered in Anna Nagar, Chennai. We empower organizations with practical technology roadmaps, process optimization, and scalable enterprise consulting.
             </p>
-            <div className="pt-1">
-              <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-[11px] text-slate-300">
-                <ShieldCheck className="w-3.5 h-3.5 text-sky-400" />
-                <span>CIN & Legal Registered Corporate Entity</span>
-              </div>
-            </div>
           </div>
 
           {/* Quick Links */}
