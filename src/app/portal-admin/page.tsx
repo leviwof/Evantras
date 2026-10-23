@@ -272,13 +272,13 @@ export default function PortalAdminPage() {
       <div className="min-h-screen bg-[#070e1b] flex items-center justify-center p-4">
         <div className="w-full max-w-md bg-slate-900/90 border border-amber-500/30 rounded-3xl p-8 sm:p-10 shadow-2xl backdrop-blur-md space-y-6">
           <div className="text-center space-y-3">
-            <div className="inline-block bg-white/10 p-2 rounded-2xl border border-amber-500/20">
+            <div className="inline-block py-2">
               <Image
-                src="/logo.png"
+                src="/logo-light.png"
                 alt="Evantras Consulting Logo"
-                width={160}
-                height={60}
-                className="h-12 w-auto object-contain"
+                width={220}
+                height={40}
+                className="h-10 w-auto object-contain mx-auto"
               />
             </div>
             <h1 className="text-xl font-bold text-white tracking-tight">Admin Portal Login</h1>
@@ -359,11 +359,11 @@ export default function PortalAdminPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <Image
-              src="/logo.png"
+              src="/logo-light.png"
               alt="Evantras"
-              width={140}
-              height={50}
-              className="h-9 w-auto object-contain"
+              width={180}
+              height={34}
+              className="h-8 w-auto object-contain"
             />
             <span className="hidden sm:inline-block px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">
               Admin Console

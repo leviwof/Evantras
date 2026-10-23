@@ -19,13 +19,13 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           {/* Company Info */}
           <div className="space-y-4">
-            <Link href="/" className="inline-block bg-white/10 p-2.5 rounded-2xl border border-amber-500/30 backdrop-blur-xs hover:border-amber-400 transition-colors">
+            <Link href="/" className="inline-block py-1 hover:opacity-95 transition-opacity">
               <Image
-                src="/logo.png"
+                src="/logo-light.png"
                 alt="Evantras Consulting Services"
-                width={170}
-                height={65}
-                className="h-12 w-auto object-contain"
+                width={240}
+                height={44}
+                className="h-10 sm:h-11 w-auto object-contain"
               />
             </Link>
             <p className="text-xs text-slate-400 leading-relaxed">

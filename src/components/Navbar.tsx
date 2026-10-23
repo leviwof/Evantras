@@ -32,15 +32,15 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 w-full bg-white shadow-xs border-b border-slate-100">
       {/* Main Navbar */}
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-        {/* Brand Official Logo Emblem */}
+        {/* Brand Official Logo */}
         <Link href="/" className="flex items-center space-x-3 group py-1">
           <Image
-            src="/logo.png"
+            src="/logo-dark.png"
             alt="Evantras Consulting Services"
-            width={160}
-            height={60}
+            width={240}
+            height={44}
             priority
-            className="h-12 w-auto object-contain transition-transform duration-200 group-hover:scale-105 drop-shadow-xs"
+            className="h-9 sm:h-11 w-auto object-contain transition-transform duration-200 group-hover:scale-102"
           />
         </Link>
 
